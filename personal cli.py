@@ -73,6 +73,31 @@ def load_note():
     except FileNotFoundError:
         notes = []
 
+def edit_note():
+    if not notes:
+        print("No notes to edit")
+        return
+    print("\nYour Notes:")
+    for note in notes:
+        print(f"{note["id"]}.{note["text"]}")
+
+    try:
+        note_id = int(input("Enter the ID of the note to edit: "))
+    except ValueError:
+        print("Invalid ID. Please enter a number.")
+        return
+
+    for note in notes:
+        if note["id"] == note_id:
+            print(f"Current text: {note['text']}")
+            new_text = input("Enter New Text: ")
+            note["text"] = new_text
+            print("Note updated successfully")
+            return
+
+    print("No note found with that ID")
+
+
 def main():
 
     load_note()
@@ -83,7 +108,8 @@ def main():
         print("3. Search notes ")
         print("4. Delete Notes")
         print("5. Save notes")
-        print("6. Quit")
+        print("6. Edit notes")
+        print("7. Quit")
 
         choice = input("Choose an option: ")
 
@@ -99,6 +125,8 @@ def main():
         elif choice == "5":
             save_notes()
         elif choice == "6":
+            edit_note()
+        elif choice == "7":
             save_notes()
             print("Goodbye")
             break
